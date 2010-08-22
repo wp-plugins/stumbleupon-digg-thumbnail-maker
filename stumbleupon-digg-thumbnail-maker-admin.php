@@ -39,6 +39,7 @@
 	
 	<h3 style="font-size:120%">Options</h3>
 
+	<p><b>Insert thumbnail Manually:</b><br/>By default, the thumbnail will be inserted into the position just before the content. However, Stumbleupon may fail to pick it up if the content is too low below the page. To solve this problem, you need to manually insert <b>&lt;?php insert_thumbnail(); ?&gt;</b> somewhere higher (probably at the bottom of 'header.php' of your theme).</p>
 	<p><b>Set your default image thumbnail directory here:</b><br/>(This is the directory text populate into the textbox for new post, it will not affect your old posts if you change it here.)<br/><br/>
 	<?php
 		$defimgdr = get_option('Default_ImgDir');

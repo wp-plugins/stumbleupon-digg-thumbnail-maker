@@ -5,7 +5,7 @@
 	Plugin URI: http://techmilieu.com/sumbleupon-and-digg-thumbnail-maker
 	Description: Stumbleupon & Digg Thumbnail Maker allows you to specifically select a thumbnail for a post when it is submitted to some social media sites.
 	Author: Philip Ze 
-	Version: 1.0
+	Version: 1.1
 	Author URI: http://techmilieu.com/
 */
 
@@ -29,7 +29,7 @@
 
 global $SUD_DA;
 $SUD_DA['Name'] = 'Stumbleupon & Digg Thumbnail Maker';
-$SUD_DA['Version'] = '1.0';
+$SUD_DA['Version'] = '1.1';
 $SUD_DA['URI'] = 'http://techmilieu.com/sumbleupon-and-digg-thumbnail-maker';
 
 
@@ -135,13 +135,31 @@ function sud_wp_head()
 	$thumburl = str_replace("http://", "", $thumburl);	
 	echo "<link rel='image_src' href='http://".$thumburl."' />"."\n";
 	if ($defhasch) { ?>
-	<script type="text/javascript">function do_sud_thumb(thumburl,thumbalt) { docr = document.referrer; if ( docr.indexOf('http://www.stumbleupon.com/refer.php')!=-1 ) { document.write('<img src="'+thumburl+'" alt="'+thumbalt+'" />'); } } </script>	
+	<script type="text/javascript">function do_sud_thumb(thumburl,thumbalt) { docr = decodeURIComponent(document.referrer); if ( docr.indexOf('http://www.stumbleupon.com/refer.php')!=-1 && docr.indexOf('<?php echo get_permalink($post->ID); ?>')!=-1) { document.write('<div><img src="'+thumburl+'" alt="'+thumbalt+'" /></div>'); } } </script>	
 	<?php	}		
 }
 add_action('wp_head', 'sud_wp_head');
 
+$has_thumb = false;
+function insert_thumbnail()
+{
+	global $has_thumb;
+	if($has_thumb) { return $content; }
+	$c = sud_getimage();
+	$has_thumb = true;
+	echo $c;
+}
 
 function sud_the_content($content)
+{
+	global $has_thumb;
+	if($has_thumb) { return $content; }
+	$c = sud_getimage();
+	return $c . $content;
+}
+add_action('the_content', 'sud_the_content'); 
+
+function sud_getimage()
 {
 	$c = "";
 	$defhasch = get_option('Default_HasCache');		
@@ -150,22 +168,22 @@ function sud_the_content($content)
 	} else {	
 		$c = sud_getimage_php() ;
 	}	
-	return $c . $content;
+	return $c;
 }
-add_action('the_content', 'sud_the_content'); 
-
 
 function sud_getimage_php()
 {
 	global $post;
 	$c = "";
-	$refe = wp_get_referer();
-	if( strpos($refe,"http://www.stumbleupon.com/refer.php")!==false ) {
+	$refe = urldecode(wp_get_referer());
+	$chk1 = "http://www.stumbleupon.com/refer.php?url=";
+	$chk2 = get_permalink( $post->ID );
+	if( strpos($refe,$chk1)!==false && strpos($refe,$chk2)!==false ) {
 		$thumburl = get_option('sud_thumb_url_'.$post->ID);
 		$thumburl = str_replace("http://", "", $thumburl);		
 		$thumbalt = get_the_title();	
 		if ( $thumburl != "" ) {
-			$c = "<img src='http://".$thumburl."' alt='".$thumbalt."' />\n" ;
+			$c = "<div><img src='http://".$thumburl."' alt='".$thumbalt."' /></div>\n" ;
 		}		
 	}	
 	return $c;

@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: WordPress Plugin, Stumbleupon, Digg, social media, text insertion, thumbnail, image, admin, posts, plugin
 Requires at least: 2.5
 Tested up to: 3.0.1
-Stable tag: 1.0
+Stable tag: 1.1
 
 Stumbleupon & Digg Thumbnail Maker allows you to specifically select a thumbnail for a post when it is submitted to some social media sites.
 
@@ -42,14 +42,15 @@ Please feedback to [http://techmilieu.com/sumbleupon-and-digg-thumbnail-maker](h
 
 == Change Log ==
 
+= 1.1 =
+* Fix the Stumbleupon referer url detection code. 
+* Add the "Insert thumbnail Manually" functionality <?php insert_thumbnail(); ?>. 
+* Date: 22-Aug-2010
+
 = 1.0 =
 * Initial public release. 
 * Date: 16-Aug-2010
 
-== Upgrade Notice ==
-
-= 1.0 =
-* Download this initial public release. 
 
 
 
