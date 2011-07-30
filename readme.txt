@@ -1,7 +1,7 @@
 === Stumbleupon & Digg Thumbnail Maker ===
 Contributors: Philip Ze
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8609041
-Tags: WordPress Plugin, Stumbleupon, Digg, social Media, Text Insertion, Thumbnail, Image, Admin, Posts, Plugin
+Tags: WordPress Plugin, Stumbleupon, Digg, social Media, Text Insertion, Thumbnail, Image, Admin, Posts
 Requires at least: 2.5
 Tested up to: 3.0.1
 Stable tag: 1.1
